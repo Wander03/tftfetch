@@ -4,8 +4,8 @@ Title: What the Package Does (Title Case)
 Version: 0.1.0
 Authors@R: c(
     person(
-      "Jane", "Doe",
-      email = "jane@example.com",
+      "Andrew", "Kerr",
+      email = "adkerr2001@gmail.com",
       role = c("aut", "cre")
     )
   )
@@ -16,3 +16,8 @@ Encoding: UTF-8
 LazyData: true
 URL: https://github.com/Wander03/tftfetch
 BugReports: https://github.com/Wander03/tftfetch/issues
+Imports: 
+    checkmate,
+    httr2,
+    jsonlite
+RoxygenNote: 7.3.2

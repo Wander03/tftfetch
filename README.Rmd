@@ -33,3 +33,13 @@ and the development version of tftfetch from [GitHub](https://github.com/) with:
 # install.packages("pak")
 pak::pak("tidymodels/tftfetch")
 ```
+
+```{r}
+library(tftfetch)
+
+dotenv::load_dot_env()
+api_key <- Sys.getenv("RIOT_KEY")
+
+fetch_account_data("Wander", "HENRO", api_key)
+```
+

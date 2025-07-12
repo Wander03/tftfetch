@@ -18,36 +18,41 @@
 #' account_info <- fetch_account_data(game_name = "Wander", tag_line = "HENRO", api_key)
 #' print(account_info$puuid)
 #' }
+#'
+#' @importFrom dplyr %>%
+#' @importFrom checkmate check_character
+#' @importFrom httr2 request req_url_path_append req_headers_redacted req_error req_perform resp_status resp_body_json
+#'
 fetch_account_data <- function(game_name, tag_line, api_key) {
 
   # Input validation
-  checkmate::check_character(game_name, len = 1, any.missing = FALSE)
-  checkmate::check_character(tag_line, len = 1, any.missing = FALSE)
-  checkmate::check_character(api_key, len = 1, any.missing = FALSE)
+  check_character(game_name, len = 1, any.missing = FALSE)
+  check_character(tag_line, len = 1, any.missing = FALSE)
+  check_character(api_key, len = 1, any.missing = FALSE)
 
   # Base URL for the account-v1 endpoint
   base_url <- "https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id"
 
   # Construct the request
-  response <- httr2::request(base_url) %>%
-    httr2::req_url_path_append(game_name, tag_line) %>%
-    httr2::req_headers_redacted("X-Riot-Token" = api_key) %>%
+  response <- request(base_url) %>%
+    req_url_path_append(game_name, tag_line) %>%
+    req_headers_redacted("X-Riot-Token" = api_key) %>%
     # Use req_error() to prevent httr2 from stopping on 4xx/5xx
-    httr2::req_error(is_error = function(resp) FALSE) %>%
-    httr2::req_perform()
+    req_error(is_error = function(resp) FALSE) %>%
+    req_perform()
 
   # Check the status code
-  status_code <- httr2::resp_status(response)
+  status_code <- resp_status(response)
 
   if (status_code == 200) {
     # Success: Return the JSON body as a simplified R object (list/data frame)
-    httr2::resp_body_json(response, simplifyVector = TRUE)
+    resp_body_json(response, simplifyVector = TRUE)
   } else {
     # Error handling for non-200 status codes
 
     # Try to extract error message from JSON body
     error_details <- tryCatch({
-      httr2::resp_body_json(response, simplifyVector = TRUE)
+      resp_body_json(response, simplifyVector = TRUE)
     }, error = function(e) {
       # If the body isn't JSON (e.g., HTML error page), return a standard message
       paste("Could not parse error response body. Status:", status_code)
