@@ -1,41 +1,40 @@
-#' Fetch Riot Account Data by Riot Game Name and Tag Line
+#' Fetch Riot Account Data by PUUID
 #'
 #' Retrieves a player's Riot Account information (PUUID, gameName, and tagLine)
-#' using the Riot Account-V1 endpoint.
+#' using the Riot Account-V1 endpoint, specifically by providing their PUUID.
 #'
-#' Note: Riot IDs are formatted as "GameName#TagLine" (e.g., "Wander#HENRO").
-#' This function requires the two parts to be provided separately.
-#'
-#' @param game_name A character string representing the player's game name (the part of the Riot ID *before* the '#').
-#' @param tag_line A character string representing the player's tag line (the part of the Riot ID *after* the '#').
+#' @param puuid A character string representing the player's PUUID (Player Universally Unique ID).
+#' @param region A character string representing the player's region (america, asia, europe)
 #' @param api_key A character string containing your valid Riot API key.
 #'
 #' @return A list containing the player's PUUID, gameName, and tagLine.
 #' @examples
 #' \dontrun{
-#' # Replace with actual credentials
+#' # Replace with your actual API key and a valid PUUID
 #' api_key <- "YOUR_API_KEY"
-#' account_info <- fetch_account_data(game_name = "Wander", tag_line = "HENRO", api_key)
-#' print(account_info$puuid)
+#' example_puuid <- "YOUR_EXAMPLE_PUUID_HERE"
+#' account_info_by_puuid <- get_account_by_riot_id(puuid = example_puuid, api_key = api_key)
+#' print(account_info_by_puuid$gameName)
 #' }
 #'
 #' @importFrom dplyr %>%
-#' @importFrom checkmate check_character
+#' @importFrom checkmate check_character assert_choice
 #' @importFrom httr2 request req_url_path_append req_headers_redacted req_error req_perform resp_status resp_body_json
 #'
-fetch_account_data <- function(game_name, tag_line, api_key) {
+get_account_by_puuid <- function(puuid, region, api_key) {
 
   # Input validation
-  check_character(game_name, len = 1, any.missing = FALSE)
-  check_character(tag_line, len = 1, any.missing = FALSE)
+  check_character(puuid, len = 1, any.missing = FALSE)
+  check_character(region, len = 1, any.missing = FALSE)
+  assert_choice(region, choices = c("americas", "asia", "europe"))
   check_character(api_key, len = 1, any.missing = FALSE)
 
-  # Base URL for the account-v1 endpoint
-  base_url <- "https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id"
+  # Base URL for the account-v1 endpoint by PUUID
+  base_url <- paste("https://", region, ".api.riotgames.com/riot/account/v1/accounts/by-puuid", sep = "")
 
   # Construct the request
   response <- request(base_url) %>%
-    req_url_path_append(game_name, tag_line) %>%
+    req_url_path_append(puuid) %>%
     req_headers_redacted("X-Riot-Token" = api_key) %>%
     # Use req_error() to prevent httr2 from stopping on 4xx/5xx
     req_error(is_error = function(resp) FALSE) %>%
@@ -65,8 +64,8 @@ fetch_account_data <- function(game_name, tag_line, api_key) {
       error_message <- "Unknown API error."
     }
 
-    # Stop the function and provide a error message
-    stop(paste("Riot API request failed (Status ", status_code, "): ", error_message,
-               " | Game:", game_name, "Tag:", tag_line), call. = FALSE)
+    # Stop the function and provide a descriptive error message
+    stop(paste("Riot API request failed (Status ", status_code, "): ", error_message, sep = ""),
+         call. = FALSE)
   }
 }

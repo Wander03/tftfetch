@@ -1,0 +1,12 @@
+structure(list(method = "GET", url = "https://americas.api.riotgames.com/riot/account/v1/accounts/by-riot-id/NonExistentName/XYZ", 
+    status_code = 404L, headers = structure(list(date = "Sun, 13 Jul 2025 02:00:22 GMT", 
+        `content-type` = "application/json", `access-control-allow-headers` = "User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range", 
+        `access-control-allow-methods` = "GET, PUT, DELETE, POST, OPTIONS", 
+        `access-control-allow-origin` = "*", `access-control-expose-headers` = "Content-Length,Content-Range", 
+        `content-encoding` = "gzip", vary = "Accept-Encoding", 
+        `x-app-rate-limit` = "100:120,20:1", `x-app-rate-limit-count` = "9:120,4:1", 
+        `x-method-rate-limit` = "1000:60", `x-method-rate-limit-count` = "3:60", 
+        `cf-cache-status` = "DYNAMIC", `set-cookie` = "REDACTED", 
+        server = "cloudflare", `cf-ray` = "95e52fb188fb2712-SJC"), redact = character(0), class = "httr2_headers"), 
+    body = charToRaw("{\"status\":{\"status_code\":404,\"message\":\"Data not found - No results found for player with riot id NonExistentName#XYZ\"}}"), 
+    cache = new.env(parent = emptyenv())), class = "httr2_response")

@@ -23,3 +23,14 @@ and the development version of tftfetch from
 # install.packages("pak")
 pak::pak("tidymodels/tftfetch")
 ```
+
+## Example
+
+``` r
+library(tftfetch)
+
+dotenv::load_dot_env()
+api_key <- Sys.getenv("RIOT_KEY")
+
+get_account_by_riot_id("Wander", "HENRO", "americas", api_key)
+```

@@ -18,6 +18,12 @@ URL: https://github.com/Wander03/tftfetch
 BugReports: https://github.com/Wander03/tftfetch/issues
 Imports: 
     checkmate,
+    dotenv,
+    dplyr,
+    here,
+    httptest2,
     httr2,
-    jsonlite
+    jsonlite,
+    testthat
 RoxygenNote: 7.3.2
+Config/testthat/edition: 3
