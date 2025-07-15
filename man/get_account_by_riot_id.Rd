@@ -4,16 +4,23 @@
 \alias{get_account_by_riot_id}
 \title{Fetch Riot Account Data by Riot Game Name and Tag Line}
 \usage{
-get_account_by_riot_id(game_name, tag_line, region, api_key)
+get_account_by_riot_id(game_name, tag_line, routing_region, api_key)
 }
 \arguments{
-\item{game_name}{A character string representing the player's game name (the part of the Riot ID *before* the '#').}
+\item{game_name}{A character string representing the player's game name (the part of the Riot ID \emph{before} the '#').}
 
-\item{tag_line}{A character string representing the player's tag line (the part of the Riot ID *after* the '#').}
+\item{tag_line}{A character string representing the player's tag line (the part of the Riot ID \emph{after} the '#').}
 
-\item{region}{A character string representing the player's region (america, asia, europe)}
+\item{routing_region}{A character string representing the API routing region (e.g., "americas", "asia", "europe").}
 
-\item{api_key}{A character string containing your valid Riot API key.}
+\item{api_key}{A character string containing your valid Riot API key.
+
+The \code{routing_region} parameter (e.g., "americas", "asia", "europe") determines
+which API cluster the request is sent to. For Account-V1 endpoints, the account
+data is globally accessible, meaning you can query any Riot ID through any
+of these regional routing values, and you will receive the same result.
+It is recommended to use the regional routing value closest to your service's
+physical location to minimize latency.}
 }
 \value{
 A list containing the player's PUUID, gameName, and tagLine.
@@ -23,14 +30,18 @@ Retrieves a player's Riot Account information (PUUID, gameName, and tagLine)
 using the Riot Account-V1 endpoint.
 }
 \details{
-Note: Riot IDs are formatted as "GameName#TagLine" (e.g., "Wander#HENRO").
-This function requires the two parts to be provided separately.
+This function interacts with the \verb{https://\{routing_region\}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/\{game_name\}/\{tag_line\}}
+endpoint.
+
+Riot IDs are formatted as "GameName#TagLine" (e.g., "Wander#HENRO").
+This function requires the two parts (\code{game_name} and \code{tag_line}) to be
+provided as separate arguments.
 }
 \examples{
 \dontrun{
 # Replace with actual credentials
 api_key <- "YOUR_API_KEY"
-account_info <- get_account_by_riot_id(game_name = "Wander", tag_line = "HENRO", api_key)
+account_info <- get_account_by_riot_id(game_name = "Wander", tag_line = "HENRO", routing_region = "americas", api_key)
 print(account_info$puuid)
 }
 

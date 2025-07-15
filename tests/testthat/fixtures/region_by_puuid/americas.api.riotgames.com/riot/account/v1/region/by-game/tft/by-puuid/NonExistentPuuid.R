@@ -1,0 +1,12 @@
+structure(list(method = "GET", url = "https://americas.api.riotgames.com/riot/account/v1/region/by-game/tft/by-puuid/NonExistentPuuid", 
+    status_code = 400L, headers = structure(list(date = "Tue, 15 Jul 2025 02:35:59 GMT", 
+        `content-type` = "application/json;charset=utf-8", `access-control-allow-headers` = "User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range", 
+        `access-control-allow-methods` = "GET, PUT, DELETE, POST, OPTIONS", 
+        `access-control-allow-origin` = "*", `access-control-expose-headers` = "Content-Length,Content-Range", 
+        `content-encoding` = "gzip", vary = "Origin", vary = "accept-encoding", 
+        `x-app-rate-limit` = "100:120,20:1", `x-app-rate-limit-count` = "2:120,2:1", 
+        `x-method-rate-limit` = "20000:10,1200000:600", `x-method-rate-limit-count` = "2:10,3:600", 
+        `cf-cache-status` = "DYNAMIC", `set-cookie` = "REDACTED", 
+        server = "cloudflare", `cf-ray` = "95f5de9dcabeeb21-SJC"), redact = character(0), class = "httr2_headers"), 
+    body = charToRaw("{\"status\":{\"message\":\"Bad Request - Exception decrypting NonExistentPuuid\",\"status_code\":400}}"), 
+    cache = new.env(parent = emptyenv())), class = "httr2_response")

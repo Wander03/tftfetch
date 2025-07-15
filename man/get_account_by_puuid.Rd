@@ -4,12 +4,12 @@
 \alias{get_account_by_puuid}
 \title{Fetch Riot Account Data by PUUID}
 \usage{
-get_account_by_puuid(puuid, region, api_key)
+get_account_by_puuid(puuid, routing_region, api_key)
 }
 \arguments{
 \item{puuid}{A character string representing the player's PUUID (Player Universally Unique ID).}
 
-\item{region}{A character string representing the player's region (america, asia, europe)}
+\item{routing_region}{A character string representing the player's region (americas, asia, europe)}
 
 \item{api_key}{A character string containing your valid Riot API key.}
 }
@@ -20,12 +20,27 @@ A list containing the player's PUUID, gameName, and tagLine.
 Retrieves a player's Riot Account information (PUUID, gameName, and tagLine)
 using the Riot Account-V1 endpoint, specifically by providing their PUUID.
 }
+\details{
+This function interacts with the \verb{https://\{routing_region\}.api.riotgames.com/riot/account/v1/accounts/by-puuid/\{puuid\}}
+endpoint.
+
+The \code{puuid} (Player Universally Unique ID) is a unique identifier for a player
+across all Riot Games titles and regions. It can be obtained from other APIs
+like \code{get_account_by_riot_id()} or from match data.
+
+The \code{routing_region} parameter (e.g., "americas", "asia", "europe") determines
+which API cluster the request is sent to. For Account-V1 endpoints, the account
+data is globally accessible. This means you can query any PUUID through any
+of these regional routing values, and you will receive the same result.
+It is recommended to use the regional routing value closest to your service's
+physical location to minimize latency.
+}
 \examples{
 \dontrun{
 # Replace with your actual API key and a valid PUUID
 api_key <- "YOUR_API_KEY"
 example_puuid <- "YOUR_EXAMPLE_PUUID_HERE"
-account_info_by_puuid <- get_account_by_riot_id(puuid = example_puuid, api_key = api_key)
+account_info_by_puuid <- get_account_by_riot_id(puuid = example_puuid, routing_region = "americas", api_key = api_key)
 print(account_info_by_puuid$gameName)
 }
 

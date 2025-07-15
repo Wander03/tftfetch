@@ -3,20 +3,32 @@
 #' Retrieves a player's Riot Account information (PUUID, gameName, and tagLine)
 #' using the Riot Account-V1 endpoint.
 #'
-#' Note: Riot IDs are formatted as "GameName#TagLine" (e.g., "Wander#HENRO").
-#' This function requires the two parts to be provided separately.
+#' @details
+#' This function interacts with the `https://{routing_region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{game_name}/{tag_line}`
+#' endpoint.
+#'
+#' Riot IDs are formatted as "GameName#TagLine" (e.g., "Wander#HENRO").
+#' This function requires the two parts (`game_name` and `tag_line`) to be
+#' provided as separate arguments.
 #'
 #' @param game_name A character string representing the player's game name (the part of the Riot ID *before* the '#').
 #' @param tag_line A character string representing the player's tag line (the part of the Riot ID *after* the '#').
-#' @param region A character string representing the player's region (america, asia, europe)
+#' @param routing_region A character string representing the API routing region (e.g., "americas", "asia", "europe").
 #' @param api_key A character string containing your valid Riot API key.
+#'
+#' The `routing_region` parameter (e.g., "americas", "asia", "europe") determines
+#' which API cluster the request is sent to. For Account-V1 endpoints, the account
+#' data is globally accessible, meaning you can query any Riot ID through any
+#' of these regional routing values, and you will receive the same result.
+#' It is recommended to use the regional routing value closest to your service's
+#' physical location to minimize latency.
 #'
 #' @return A list containing the player's PUUID, gameName, and tagLine.
 #' @examples
 #' \dontrun{
 #' # Replace with actual credentials
 #' api_key <- "YOUR_API_KEY"
-#' account_info <- get_account_by_riot_id(game_name = "Wander", tag_line = "HENRO", api_key)
+#' account_info <- get_account_by_riot_id(game_name = "Wander", tag_line = "HENRO", routing_region = "americas", api_key)
 #' print(account_info$puuid)
 #' }
 #'
@@ -24,17 +36,17 @@
 #' @importFrom checkmate check_character assert_choice
 #' @importFrom httr2 request req_url_path_append req_headers_redacted req_error req_perform resp_status resp_body_json
 #'
-get_account_by_riot_id <- function(game_name, tag_line, region, api_key) {
+get_account_by_riot_id <- function(game_name, tag_line, routing_region, api_key) {
 
   # Input validation
   check_character(game_name, len = 1, any.missing = FALSE)
   check_character(tag_line, len = 1, any.missing = FALSE)
-  check_character(region, len = 1, any.missing = FALSE)
-  assert_choice(region, choices = c("americas", "asia", "europe"))
+  check_character(routing_region, len = 1, any.missing = FALSE)
+  assert_choice(tolower(routing_region), choices = c("americas", "asia", "europe"))
   check_character(api_key, len = 1, any.missing = FALSE)
 
   # Base URL for the account-v1 endpoint
-  base_url <- paste("https://", region, ".api.riotgames.com/riot/account/v1/accounts/by-riot-id", sep = "")
+  base_url <- paste("https://", tolower(routing_region), ".api.riotgames.com/riot/account/v1/accounts/by-riot-id", sep = "")
 
   # Construct the request
   response <- request(base_url) %>%

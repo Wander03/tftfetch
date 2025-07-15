@@ -1,0 +1,10 @@
+structure(list(method = "GET", url = "https://na1.api.riotgames.com/tft/summoner/v1/summoners/by-puuid/123", 
+    status_code = 401L, headers = structure(list(date = "Tue, 15 Jul 2025 02:07:20 GMT", 
+        `content-type` = "application/json;charset=utf-8", `access-control-allow-headers` = "User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range", 
+        `access-control-allow-methods` = "GET, PUT, DELETE, POST, OPTIONS", 
+        `access-control-allow-origin` = "*", `access-control-expose-headers` = "Content-Length,Content-Range", 
+        `content-encoding` = "gzip", vary = "Origin", vary = "accept-encoding", 
+        `cf-cache-status` = "DYNAMIC", `set-cookie` = "REDACTED", 
+        server = "cloudflare", `cf-ray` = "95f5b4a969d2cf8f-SJC"), redact = character(0), class = "httr2_headers"), 
+    body = charToRaw("{\"status\":{\"message\":\"Forbidden\",\"status_code\":401}}"), 
+    cache = new.env(parent = emptyenv())), class = "httr2_response")
