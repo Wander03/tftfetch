@@ -77,10 +77,8 @@ load_dot_env() # Load environment variables from your .env file
 api_key <- Sys.getenv("RIOT_KEY") # Retrieve your API key
 
 # Example: Get account data for "Wander#HENRO" in the Americas region
-account <- get_account_by_riot_id("Wander", "HENRO", "americas", api_key)
+get_account_by_riot_id("Wander", "HENRO", "americas", api_key)
 
 # If you prefer not to save the API as a variable, you can use Sys.getenv("RIOT_KEY") directly in the function
-account <- get_account_by_riot_id("Wander", "HENRO", "americas", Sys.getenv("RIOT_KEY"))
-
-print(account)
+get_account_by_riot_id("Wander", "HENRO", "americas", Sys.getenv("RIOT_KEY"))
 ```
