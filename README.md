@@ -84,6 +84,7 @@ get_account_by_riot_id(
   api_key = riot_key
   )
 
-# If you prefer not to save the API as a variable, you can use Sys.getenv("RIOT_KEY") directly in the function
+# If you prefer not to save the API as a variable, you can use 
+# Sys.getenv("RIOT_KEY") directly in the function
 get_account_by_riot_id(..., api_key = Sys.getenv("RIOT_KEY"))
 ```
