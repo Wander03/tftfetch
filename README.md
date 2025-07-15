@@ -10,14 +10,14 @@ on endpoints concerning the Riot game Team Fight Tactics (TFT).
 ## Installation
 
 You can install the released version of tftfetch from
-[CRAN](https://CRAN.R-project.org) with:
+<a href="https://CRAN.R-project.org" target="_blank">CRAN</a> with:
 
 ``` r
 install.packages("tftfetch")
 ```
 
 and the development version of tftfetch from
-[GitHub](https://github.com/) with:
+<a href="https://github.com/" target="_blank">GitHub</a> with:
 
 ``` r
 # install.packages("pak")
@@ -30,8 +30,9 @@ To use `tftfetch`, you will need a Riot Games API key.
 
 Obtain an API Key:
 
-- Visit the [Riot Games Developer
-  Portal](https://developer.riotgames.com/).
+- Visit the
+  <a href="https://developer.riotgames.com/" target="_blank">Riot Games
+  Developer Portal</a>.
 
 - Register for an account (if you don’t have one).
 
