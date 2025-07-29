@@ -46,25 +46,25 @@
 #' }
 #'
 #' @importFrom dplyr %>%
-#' @importFrom checkmate check_character assert_choice
+#' @importFrom checkmate assert_character assert_choice
 #' @importFrom httr2 request req_url_path_append req_headers_redacted req_error req_perform resp_status resp_body_json
 #'
 get_region_by_puuid <- function(puuid, routing_region, game, api_key) {
 
   # Input validation
-  check_character(game, len = 1, any.missing = FALSE)
+  assert_character(game, len = 1, any.missing = FALSE)
   assert_choice(game, choices = c("lol", "tft")) # Valid games for active-shards
 
-  check_character(puuid, len = 1, any.missing = FALSE)
+  assert_character(puuid, len = 1, any.missing = FALSE)
 
-  check_character(routing_region, len = 1, any.missing = FALSE)
-  assert_choice(routing_region, choices = c("americas", "asia", "europe")) # Regional routing values
+  assert_character(routing_region, len = 1, any.missing = FALSE)
+  assert_choice(tolower(routing_region), choices = c("americas", "asia", "europe")) # Regional routing values
 
-  check_character(api_key, len = 1, any.missing = FALSE)
+  assert_character(api_key, len = 1, any.missing = FALSE)
 
   # Base URL for the active-shards endpoint
   base_url <- paste0(
-    "https://", routing_region,
+    "https://", tolower(routing_region),
     ".api.riotgames.com/riot/account/v1/region/by-game"
   )
 
@@ -94,7 +94,7 @@ get_region_by_puuid <- function(puuid, routing_region, game, api_key) {
       error_message <- "Unknown API error."
     }
 
-    stop(paste0(
-      "Riot API request failed (Status ", status_code, "): ", error_message, sep = ""), call. = FALSE)
+    stop(paste0("Riot API request failed (Status ", status_code, "): ", error_message),
+         call. = FALSE)
   }
 }

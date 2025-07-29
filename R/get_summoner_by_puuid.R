@@ -63,24 +63,24 @@
 #' }
 #'
 #' @importFrom dplyr %>%
-#' @importFrom checkmate check_character assert_choice
+#' @importFrom checkmate assert_character assert_choice
 #' @importFrom httr2 request req_url_path_append req_headers_redacted req_error req_perform resp_status resp_body_json
 #'
 get_summoner_by_puuid <- function(puuid, region, api_key) {
 
   # Input validation
-  check_character(puuid, len = 1, any.missing = FALSE)
-  check_character(region, len = 1, any.missing = FALSE)
+  assert_character(puuid, len = 1, any.missing = FALSE)
+  assert_character(region, len = 1, any.missing = FALSE)
 
   # Assert that 'region' is one of the valid game-specific platform IDs
   valid_platforms <- c("br1", "eun1", "euw1", "jp1", "kr", "la1", "la2", "me1", "na1", "oc1", "ru", "sg2", "tr1", "tw2", "vn2")
   assert_choice(tolower(region), choices = valid_platforms)
 
-  check_character(api_key, len = 1, any.missing = FALSE)
+  assert_character(api_key, len = 1, any.missing = FALSE)
 
   # Base URL for the TFT Summoner-V1 endpoint by PUUID
   # Use 'platform' for the subdomain here
-  base_url <- paste("https://", tolower(region), ".api.riotgames.com/tft/summoner/v1/summoners/by-puuid", sep = "")
+  base_url <- paste0("https://", tolower(region), ".api.riotgames.com/tft/summoner/v1/summoners/by-puuid")
 
   # Construct the request
   response <- request(base_url) %>%
@@ -114,6 +114,7 @@ get_summoner_by_puuid <- function(puuid, region, api_key) {
     }
 
     # Stop the function and provide a descriptive error message
-    stop(paste("Riot API request failed (Status ", status_code, "): ", error_message, sep = ""), call. = FALSE)
+    stop(paste0("Riot API request failed (Status ", status_code, "): ", error_message),
+         call. = FALSE)
   }
 }

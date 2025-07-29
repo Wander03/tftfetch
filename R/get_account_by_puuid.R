@@ -33,19 +33,19 @@
 #' }
 #'
 #' @importFrom dplyr %>%
-#' @importFrom checkmate check_character assert_choice
+#' @importFrom checkmate assert_character assert_choice
 #' @importFrom httr2 request req_url_path_append req_headers_redacted req_error req_perform resp_status resp_body_json
 #'
 get_account_by_puuid <- function(puuid, routing_region, api_key) {
 
   # Input validation
-  check_character(puuid, len = 1, any.missing = FALSE)
-  check_character(routing_region, len = 1, any.missing = FALSE)
+  assert_character(puuid, len = 1, any.missing = FALSE)
+  assert_character(routing_region, len = 1, any.missing = FALSE)
   assert_choice(tolower(routing_region), choices = c("americas", "asia", "europe"))
-  check_character(api_key, len = 1, any.missing = FALSE)
+  assert_character(api_key, len = 1, any.missing = FALSE)
 
   # Base URL for the account-v1 endpoint by PUUID
-  base_url <- paste("https://", tolower(routing_region), ".api.riotgames.com/riot/account/v1/accounts/by-puuid", sep = "")
+  base_url <- paste0("https://", tolower(routing_region), ".api.riotgames.com/riot/account/v1/accounts/by-puuid")
 
   # Construct the request
   response <- request(base_url) %>%
@@ -80,7 +80,7 @@ get_account_by_puuid <- function(puuid, routing_region, api_key) {
     }
 
     # Stop the function and provide a descriptive error message
-    stop(paste("Riot API request failed (Status ", status_code, "): ", error_message, sep = ""),
+    stop(paste0("Riot API request failed (Status ", status_code, "): ", error_message),
          call. = FALSE)
   }
 }

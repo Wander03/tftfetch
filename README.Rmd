@@ -90,4 +90,3 @@ get_account_by_riot_id(
 # Sys.getenv("RIOT_KEY") directly in the function
 get_account_by_riot_id(..., api_key = Sys.getenv("RIOT_KEY"))
 ```
-
