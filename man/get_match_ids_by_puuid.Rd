@@ -17,7 +17,7 @@ get_match_ids_by_puuid(
 \arguments{
 \item{puuid}{A character string representing the player's PUUID (Player Universally Unique ID).}
 
-\item{routing_region}{A character string representing the player's region (americas, asia, europe)}
+\item{routing_region}{A character string representing the player's region (americas, asia, europe).}
 
 \item{api_key}{A character string containing your valid Riot API key.}
 
@@ -34,7 +34,7 @@ A character vector of TFT match IDs.
 }
 \description{
 Retrieves a list of Teamfight Tactics (TFT) match IDs for a given player's
-PUUID, optionally filtered by time, queue type, or result type.
+PUUID, optionally filtered by time and starting index.
 }
 \details{
 This function interacts with the \verb{https://\{routing_region\}.api.riotgames.com/tft/match/v1/matches/by-puuid/\{puuid\}/ids}

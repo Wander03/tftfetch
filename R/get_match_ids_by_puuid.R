@@ -1,10 +1,10 @@
 #' Fetch TFT Match IDs by PUUID
 #'
 #' Retrieves a list of Teamfight Tactics (TFT) match IDs for a given player's
-#' PUUID, optionally filtered by time, queue type, or result type.
+#' PUUID, optionally filtered by time and starting index.
 #'
 #' @param puuid A character string representing the player's PUUID (Player Universally Unique ID).
-#' @param routing_region A character string representing the player's region (americas, asia, europe)
+#' @param routing_region A character string representing the player's region (americas, asia, europe).
 #' @param api_key A character string containing your valid Riot API key.
 #' @param start An integer for the starting index of results for pagination (max 999). Default is 0. Optional.
 #' @param startTime An integer (epoch milliseconds) for the start of the time range. Optional.
